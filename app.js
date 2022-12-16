@@ -22,13 +22,14 @@ function startGame(){
     cell.innerHTML = '';
     cell.addEventListener('click', handleClick.bind(null, cell, index));
   });
+  turn.innerHTML = `Player ${Math.floor(Math.random() * 2)+1 }`
 };
 
 function handleClick(cell, index){
   if (gameActive === true){
-  const cellValue = cell.innerHTML;
-  if (cellValue === ''){
-  if (turn.innerHTML === 'Player 1'){
+    const cellValue = cell.innerHTML;
+    if (cellValue === ''){
+    if (turn.innerHTML === `Player 1`){
     cell.innerHTML = player1;
     turn.innerHTML = 'Player 2'
     board[Math.floor(index / 3)][index % 3] = player1;
@@ -47,7 +48,11 @@ checkWinner();
 function checkWinner() {
     for (let i = 0; i < 3; i++) {
     if (board[i][0] === board[i][1] && board[i][0] === board[i][2] && board[i][0] !== '') {
-      showResult(board[i][0]);
+      if ('X' == board[i][0]){
+        result.innerHTML = 'Player 1 Wins!';
+      } else if ('O' == board[i][0]){
+        result.innerHTML = 'Player 2 Wins!';
+      } 
       gameActive = false
       console.log ("You Win!")
       return;
@@ -55,7 +60,11 @@ function checkWinner() {
   }
   for (let i = 0; i < 3; i++) {
     if (board[0][i] === board[1][i] && board[0][i] === board[2][i] && board[0][i] !== '') {
-      showResult(board[0][i]);
+      if ('X' == board[0][i]){
+        result.innerHTML = 'Player 1 Wins!';
+      } else if ('O' == board[0][i]){
+        result.innerHTML = 'Player 2 Wins!';
+      } 
       gameActive = false
       console.log ("You Win!")
       return;
@@ -83,14 +92,16 @@ function checkWinner() {
   }
   if (count == 9) {
     showResult('Tie');
+    gameActive = false
     return;
   }
 }
 
-function showResult(symbol){
-  if (symbol === player1){
+function showResult(postion){
+  console.log("postion", postion)
+  if ('X' == postion){
     result.innerHTML = 'Player 1 Wins!';
-  } else if (symbol === player2){
+  } else if ('O' == postion){
     result.innerHTML = 'Player 2 Wins!';
   } else{
     result.innerHTML == 'Tie!';
